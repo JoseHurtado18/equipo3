@@ -25,6 +25,7 @@
                 >
 
                 <ImageView
+                    android:id="@+id/boton_estrella"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -35,6 +36,7 @@
                     android:src="@drawable/star_24px" />
 
                 <ImageView
+                    android:id="@+id/boton_volumen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -46,6 +48,7 @@
                     app:tint="@color/orange" />
 
                 <ImageView
+                    android:id="@+id/boton_control"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -57,6 +60,7 @@
                     app:tint="@color/orange" />
 
                 <ImageView
+                    android:id="@+id/boton_agregar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -69,6 +73,7 @@
 
 
                 <ImageView
+                    android:id="@+id/boton_compartir"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

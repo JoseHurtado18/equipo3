@@ -7,21 +7,15 @@
     tools:context=".MainActivity"
     android:background="@drawable/fondomadera">
 
-    <LinearLayout
+    <include
+        android:id="@+id/toolbar_include"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnCompartir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Compartir"
-            android:drawableLeft="@drawable/share_24px"/>
-
-
-
-
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
