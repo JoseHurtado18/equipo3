@@ -1,6 +1,7 @@
 package com.example.miniproyecto1
 
 import android.content.Intent
+import android.graphics.Matrix
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -16,14 +17,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         val botonControl = findViewById<ImageView>(R.id.boton_control)
 
         botonControl.setOnClickListener {
             val intent = Intent(this, Reglas::class.java)
             startActivity(intent)
         }
+
 
         val botonCompartir = findViewById<ImageView>(R.id.boton_compartir)
 
