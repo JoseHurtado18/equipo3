@@ -30,6 +30,8 @@ class HomeActivity : AppCompatActivity() {
         flashingButton()
         controllerSound()
         giroBotella()
+
+
     }
 
     override fun onDestroy() {
@@ -44,16 +46,28 @@ class HomeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         rateApp()
+        shareApp()
 
         val btnShare: ImageView = binding.contentToolbar.btnShare
         val btnReglas: ImageView = binding.contentToolbar.btnReglas
         val btnRetos: ImageView = binding.contentToolbar.btnRetos
-        val btnSound: ImageView = binding.contentToolbar.btnSound
+
 
         setTouchAnimation(btnShare)
-        setTouchAnimation(btnReglas)
+        //setTouchAnimation(btnReglas)
         setTouchAnimation(btnRetos)
-        setTouchAnimation(btnSound)
+
+
+
+        btnReglas.setOnClickListener {
+            setTouchAnimation(btnReglas)
+
+            btnReglas.postDelayed({
+                val intent = Intent(this, Reglas::class.java)
+                startActivity(intent)
+            }, 200)
+        }
+
 
     }
 
@@ -81,6 +95,23 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun shareApp(){
+        val botonCompartir = binding.contentToolbar.btnShare
+
+        botonCompartir.setOnClickListener {
+            val tituloApp = "App pico botella"
+            val eslogan = "Solo los valientes lo juegan !!"
+            val urlDescarga = "https://play.google.com/store/apps/details?id=com.nequi.MobileApp&hl=es_419&gl=es"
+
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "$tituloApp\n$eslogan\n$urlDescarga")
+                type = "text/plain"
+            }
+
+            startActivity(Intent.createChooser(sendIntent, "Compartir con"))
+        }
+    }
 
     private fun rateApp() {
         val btnRate: ImageView = binding.contentToolbar.btnRate
@@ -103,19 +134,19 @@ class HomeActivity : AppCompatActivity() {
 
         mediaPlayer = MediaPlayer.create(this, R.raw.supermariobros)
 
-        mediaPlayer.isLooping = true // Repetir audio
+        mediaPlayer.isLooping = true
         mediaPlayer.start()
 
         btnSound.setOnClickListener {
+            //setTouchAnimation(btnSound)
             if (isSoundOn) {
                 btnSound.setImageResource(R.drawable.volume_off_24px)
-                mediaPlayer.stop()
-                mediaPlayer.prepare()
+                mediaPlayer.pause()
             } else {
                 btnSound.setImageResource(R.drawable.volume_up_24px)
                 mediaPlayer.start()
             }
-            isSoundOn = !isSoundOn // Alterna el estado
+            isSoundOn = !isSoundOn
         }
     }
 
@@ -126,7 +157,7 @@ class HomeActivity : AppCompatActivity() {
         flashingButton.startAnimation(animacion)
     }
 
-    private var lastAngle = 0f // Ángulo de la última posición
+    private var lastAngle = 0f
 
     private fun giroBotella() {
         val bottle: ImageView = binding.imgBotella
@@ -138,40 +169,35 @@ class HomeActivity : AppCompatActivity() {
             val newAngle = lastAngle + randomAngle
             val animator = ObjectAnimator.ofFloat(bottle, "rotation", lastAngle, newAngle)
 
-            lastAngle = newAngle % 360 // Normalizamos a 360 grados para evitar valores muy altos
+            lastAngle = newAngle % 360
 
             btn.clearAnimation()
             btn.visibility = View.INVISIBLE
 
-            // Duración de la animación de 3 segundos
             animator.duration = 3000
 
-            // Pausa la música de fondo
             var musicaOff = false
-
+            // Pausa la música de fondo
             if (mediaPlayer.isPlaying) {
                 mediaPlayer.stop()
                 musicaOff = true
             }
 
-            // Configura y reproduce el sonido del giro de la botella
             mediaPlayerGiro = MediaPlayer.create(this, R.raw.sonidobotella3seg)
             mediaPlayerGiro.start()
 
             // Temporizador regresivo que actualiza el TextView cada segundo
             object : CountDownTimer(3000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
-                    // Actualiza el TextView con los segundos restantes
-                    tvCounter.text = (millisUntilFinished / 1000).toString()
 
+                    tvCounter.text = (millisUntilFinished / 1000).toString()
 
                 }
 
                 override fun onFinish() {
-                    // Una vez terminado el temporizador, el TextView muestra "0"
+
                     tvCounter.text = "0"
 
-                    // Cuando termina el giro, reanuda la música de fondo
                     mediaPlayerGiro.stop()
                     mediaPlayerGiro.release()
                     if (musicaOff === true){
@@ -186,7 +212,7 @@ class HomeActivity : AppCompatActivity() {
                 }
             }.start()
 
-            // Cuando la animación termine, se puede fijar la posición final
+            // posición final
             animator.start()
 
         }
