@@ -29,7 +29,7 @@ class RetosActivity : AppCompatActivity() {
         // Inicialización del adaptador con la lista de retos
         retoAdapter = RetoAdapter(retos,
             onEditClick = { reto -> showEditRetoDialog(reto) },
-            onDeleteClick = { reto -> deleteReto(reto) }
+            onDeleteClick = { reto -> showEliminarRetoDialog(reto)}
         )
 
         // Configuración del RecyclerView
