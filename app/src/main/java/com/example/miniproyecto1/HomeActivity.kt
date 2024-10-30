@@ -69,10 +69,6 @@ class HomeActivity : AppCompatActivity() {
 
 
         setTouchAnimation(btnShare)
-        //setTouchAnimation(btnReglas)
-        setTouchAnimation(btnRetos)
-
-
 
         btnReglas.setOnClickListener {
             setTouchAnimation(btnReglas)

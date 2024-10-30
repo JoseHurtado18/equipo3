@@ -3,7 +3,10 @@ package com.example.miniproyecto1
 import Reto
 import RetoAdapter
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +29,7 @@ class RetosActivity : AppCompatActivity() {
         // Inicialización del adaptador con la lista de retos
         retoAdapter = RetoAdapter(retos,
             onEditClick = { reto -> showEditRetoDialog(reto) },
-            onDeleteClick = { reto -> deleteReto(reto) }
+            onDeleteClick = { reto -> showEliminarRetoDialog(reto)}
         )
 
         // Configuración del RecyclerView
@@ -64,6 +67,29 @@ class RetosActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancelar", null)
             .show()
+    }
+
+    private fun showEliminarRetoDialog(reto: Reto) {
+        // Inflar el diseño del diálogo personalizado
+        val dialogView = layoutInflater.inflate(R.layout.dialog_eliminar_reto, null)
+        val tvReto = dialogView.findViewById<TextView>(R.id.tvReto)
+        tvReto.text = reto.descripcion
+
+        // Crear el diálogo
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        dialogView.findViewById<Button>(R.id.btnNo).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialogView.findViewById<Button>(R.id.btnSi).setOnClickListener {
+            deleteReto(reto)
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     // Añadir un reto a la lista y notificar al adaptador
