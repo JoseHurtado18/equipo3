@@ -3,6 +3,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miniproyecto1.R
@@ -27,8 +28,8 @@ class RetoAdapter(
 
     inner class RetoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val descripcionTextView: TextView = itemView.findViewById(R.id.retoTextView)
-        private val editButton: ImageButton = itemView.findViewById(R.id.editImageView)
-        private val deleteButton: ImageButton = itemView.findViewById(R.id.deleteImageView)
+        private val editButton: ImageView = itemView.findViewById(R.id.editImageView)
+        private val deleteButton: ImageView = itemView.findViewById(R.id.deleteImageView)
 
         fun bind(reto: Reto) {
             descripcionTextView.text = reto.descripcion
