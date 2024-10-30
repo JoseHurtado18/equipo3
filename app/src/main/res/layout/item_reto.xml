@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="#FFFFFF"
+    >
+
+
+
+    <!-- Contenedor de los iconos en la parte superior -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|end"
+        android:paddingBottom="4dp">
+
+        <!-- Icono de cerveza -->
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_beer"
+            android:contentDescription="Beer icon"
+            app:tint="#FFA500" />
+
+        <!-- Espacio entre iconos -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Icono de edición -->
+        <ImageView
+            android:id="@+id/editImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_edit"
+            android:contentDescription="Edit icon"
+            app:tint="#008000" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.1" />
+
+        <!-- Icono de eliminar -->
+        <ImageView
+            android:id="@+id/deleteImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="Delete icon"
+            app:tint="#FF0000" />
+
+    </LinearLayout>
+
+    <!-- Línea divisoria -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4E4E4E" />
+
+    <!-- Texto del reto -->
+    <TextView
+        android:id="@+id/retoTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reto"
+        android:textColor="#040404"
+        android:textSize="16sp"
+        android:paddingTop="4dp" />
+
+</LinearLayout>

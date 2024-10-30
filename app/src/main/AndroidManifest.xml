@@ -41,6 +41,9 @@
             android:name=".compartir"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".RetosActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

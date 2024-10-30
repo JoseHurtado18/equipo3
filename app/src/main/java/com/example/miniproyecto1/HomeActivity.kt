@@ -34,6 +34,21 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.pause()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isSoundOn) {
+            mediaPlayer.start()
+        }
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer.release()
@@ -64,6 +79,15 @@ class HomeActivity : AppCompatActivity() {
 
             btnReglas.postDelayed({
                 val intent = Intent(this, Reglas::class.java)
+                startActivity(intent)
+            }, 200)
+        }
+
+        btnRetos.setOnClickListener {
+            setTouchAnimation(btnRetos)
+
+            btnRetos.postDelayed({
+                val intent = Intent(this, RetosActivity::class.java)
                 startActivity(intent)
             }, 200)
         }
@@ -128,9 +152,10 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    var isSoundOn = true
     private fun controllerSound(){
         val btnSound : ImageView = binding.contentToolbar.btnSound
-        var isSoundOn = true
+        //var isSoundOn = true
 
         mediaPlayer = MediaPlayer.create(this, R.raw.supermariobros)
 
