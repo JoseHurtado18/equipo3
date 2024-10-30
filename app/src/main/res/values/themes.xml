@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.Miniproyecto1" parent="Base.Theme.Miniproyecto1" />
+
+    <style name="Theme.MyApp" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Asegúrate de no tener un color primario que esté aplicándose por defecto -->
+        <item name="colorPrimary">@android:color/transparent</item>
+    </style>
+
 </resources>

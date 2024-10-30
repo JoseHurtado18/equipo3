@@ -52,7 +52,7 @@ class RetosActivity : AppCompatActivity() {
         val retoInput = dialogView.findViewById<TextInputEditText>(R.id.retoInput)
 
         MaterialAlertDialogBuilder(this)
-            .setTitle("Agregar reto")
+            .setTitle("")
             .setView(dialogView)
             .setPositiveButton("Guardar") { _, _ ->
                 val retoText = retoInput.text.toString()
@@ -68,18 +68,19 @@ class RetosActivity : AppCompatActivity() {
 
     // Añadir un reto a la lista y notificar al adaptador
     private fun addReto(reto: Reto) {
-        retos.add(reto)
-        retoAdapter.notifyItemInserted(retos.size - 1)
+        retos.add(0, reto) // Agrega el reto al inicio de la lista
+        retoAdapter.notifyItemInserted(0) // Notifica al adaptador que se insertó un elemento en la posición 0
+        binding.recyclerView.scrollToPosition(0) // Opcional: desplaza la vista al inicio
     }
 
     // Mostrar diálogo para editar un reto existente
     private fun showEditRetoDialog(reto: Reto) {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_add_reto, null)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_edit_reto, null)
         val retoInput = dialogView.findViewById<TextInputEditText>(R.id.retoInput)
         retoInput.setText(reto.descripcion) // Setea el texto actual del reto en el diálogo
 
         MaterialAlertDialogBuilder(this)
-            .setTitle("Editar Reto")
+            .setTitle(" ")
             .setView(dialogView)
             .setPositiveButton("Guardar") { _, _ ->
                 val updatedText = retoInput.text.toString()
