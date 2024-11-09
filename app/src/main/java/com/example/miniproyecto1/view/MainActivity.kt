@@ -1,9 +1,10 @@
-package com.example.miniproyecto1
+package com.example.miniproyecto1.view
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.miniproyecto1.R
 import com.example.miniproyecto1.databinding.ActivityMainBinding
 
 

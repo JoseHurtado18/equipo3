@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#4E4E4E"
-    tools:context=".RetosActivity">
+    tools:context=".view.RetosActivity">
 
     <ImageButton
         android:id="@+id/backButton"

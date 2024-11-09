@@ -1,4 +1,4 @@
-package com.example.miniproyecto1
+package com.example.miniproyecto1.view
 
 import android.animation.ObjectAnimator
 import android.content.Intent
@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.miniproyecto1.R
 import com.example.miniproyecto1.databinding.HomeBinding
 import kotlin.random.Random
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "260728214141",
+    "project_id": "equipo3-picobotellabd",
+    "storage_bucket": "equipo3-picobotellabd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260728214141:android:ca5a7a2327cc1b37e91714",
+        "android_client_info": {
+          "package_name": "com.example.miniproyecto1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFIGRiGA0Pnc3AUz-0deIvDDfGX2FS-tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

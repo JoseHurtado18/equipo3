@@ -1,10 +1,11 @@
-package com.example.miniproyecto1
+package com.example.miniproyecto1.view
 
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.miniproyecto1.R
 
 class Reglas : AppCompatActivity() {
 

@@ -1,7 +1,5 @@
-package com.example.miniproyecto1
+package com.example.miniproyecto1.view
 
-import Reto
-import RetoAdapter
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -10,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.miniproyecto1.R
 import com.example.miniproyecto1.databinding.RetosBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
@@ -53,21 +52,80 @@ class RetosActivity : AppCompatActivity() {
     private fun showAddRetoDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_reto, null)
         val retoInput = dialogView.findViewById<TextInputEditText>(R.id.retoInput)
+        val cancelButton = dialogView.findViewById<Button>(R.id.cancelButton)
+        val saveButton = dialogView.findViewById<Button>(R.id.saveButton)
 
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Agregar reto")
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle(" ")
             .setView(dialogView)
-            .setPositiveButton("Guardar") { _, _ ->
-                val retoText = retoInput.text.toString()
-                if (retoText.isNotBlank()) {
-                    addReto(Reto(retoText))
-                } else {
-                    Toast.makeText(this, "El reto no puede estar vacío", Toast.LENGTH_SHORT).show()
-                }
+            .create()
+
+        // Configurar listener para el botón Cancelar
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // Configurar listener para el botón Guardar
+        saveButton.setOnClickListener {
+            val retoText = retoInput.text.toString()
+            if (retoText.isNotBlank()) {
+                addReto(Reto(retoText))
+                dialog.dismiss()
+            } else {
+                Toast.makeText(this, "El reto no puede estar vacío", Toast.LENGTH_SHORT).show()
             }
-            .setNegativeButton("Cancelar", null)
-            .show()
+        }
+
+        dialog.show()
     }
+
+    // Añadir un reto a la lista y notificar al adaptador
+    private fun addReto(reto: Reto) {
+        retos.add(0, reto) // Agrega el reto al inicio de la lista
+        retoAdapter.notifyItemInserted(0) // Notifica al adaptador que se insertó un elemento en la posición 0
+        binding.recyclerView.scrollToPosition(0) // Opcional: desplaza la vista al inicio
+    }
+
+    // Mostrar diálogo para editar un reto existente
+    private fun showEditRetoDialog(reto: Reto) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_edit_reto, null)
+        val retoInput = dialogView.findViewById<TextInputEditText>(R.id.retoInput)
+        val cancelButton = dialogView.findViewById<Button>(R.id.cancelButton)
+        val saveButton = dialogView.findViewById<Button>(R.id.saveButton)
+
+        retoInput.setText(reto.descripcion)
+
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle(" ")
+            .setView(dialogView)
+            .create()
+
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        saveButton.setOnClickListener {
+            val updatedText = retoInput.text.toString()
+            if (updatedText.isNotBlank()) {
+                updateReto(reto, updatedText)
+                dialog.dismiss()
+            } else {
+                Toast.makeText(this, "El reto no puede estar vacío", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        dialog.show()
+    }
+
+    // Actualizar un reto existente
+    private fun updateReto(reto: Reto, updatedText: String) {
+        val index = retos.indexOf(reto)
+        if (index != -1) {
+            retos[index] = Reto(updatedText)
+            retoAdapter.notifyItemChanged(index)
+        }
+    }
+
 
     private fun showEliminarRetoDialog(reto: Reto) {
         // Inflar el diseño del diálogo personalizado
@@ -90,42 +148,6 @@ class RetosActivity : AppCompatActivity() {
         }
 
         dialog.show()
-    }
-
-    // Añadir un reto a la lista y notificar al adaptador
-    private fun addReto(reto: Reto) {
-        retos.add(reto)
-        retoAdapter.notifyItemInserted(retos.size - 1)
-    }
-
-    // Mostrar diálogo para editar un reto existente
-    private fun showEditRetoDialog(reto: Reto) {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_add_reto, null)
-        val retoInput = dialogView.findViewById<TextInputEditText>(R.id.retoInput)
-        retoInput.setText(reto.descripcion) // Setea el texto actual del reto en el diálogo
-
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Editar Reto")
-            .setView(dialogView)
-            .setPositiveButton("Guardar") { _, _ ->
-                val updatedText = retoInput.text.toString()
-                if (updatedText.isNotBlank()) {
-                    updateReto(reto, updatedText)
-                } else {
-                    Toast.makeText(this, "El reto no puede estar vacío", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Cancelar", null)
-            .show()
-    }
-
-    // Actualizar un reto existente
-    private fun updateReto(reto: Reto, updatedText: String) {
-        val index = retos.indexOf(reto)
-        if (index != -1) {
-            retos[index] = Reto(updatedText)
-            retoAdapter.notifyItemChanged(index)
-        }
     }
 
     // Eliminar un reto de la lista y notificar al adaptador
