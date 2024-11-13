@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.miniproyecto1.R
 import com.example.miniproyecto1.databinding.RetosBinding
+import com.example.miniproyecto1.model.Reto
+import com.example.miniproyecto1.viewmodel.RetosViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 
@@ -17,7 +20,8 @@ class RetosActivity : AppCompatActivity() {
 
     private lateinit var binding: RetosBinding
     private lateinit var retoAdapter: RetoAdapter
-    private val retos = mutableListOf<Reto>() // Lista mutable para los retos
+    private val retosViewModel: RetosViewModel by viewModels()
+    //private val retos = mutableListOf<Reto>() // Lista mutable para los retos
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +30,7 @@ class RetosActivity : AppCompatActivity() {
 
 
         // Inicialización del adaptador con la lista de retos
-        retoAdapter = RetoAdapter(retos,
+        retoAdapter = RetoAdapter(emptyList(),
             onEditClick = { reto -> showEditRetoDialog(reto) },
             onDeleteClick = { reto -> showEliminarRetoDialog(reto)}
         )
@@ -36,6 +40,18 @@ class RetosActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@RetosActivity)
             adapter = retoAdapter
         }
+
+        // Observa los cambios en la lista de retos desde el ViewModel
+        retosViewModel.retos.observe(this) { nuevosRetos ->
+            if (nuevosRetos != null) {
+                retoAdapter.setRetos(nuevosRetos) // Actualizar la lista en el adaptador
+            }
+
+            retoAdapter.notifyDataSetChanged() // Notificar cambios al adaptador
+        }
+
+        // Llamar a getRetos para cargar los datos iniciales
+        retosViewModel.getRetos()
 
         // Configuración del botón flotante para añadir nuevos retos
         binding.fab.setOnClickListener {
@@ -69,7 +85,8 @@ class RetosActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             val retoText = retoInput.text.toString()
             if (retoText.isNotBlank()) {
-                addReto(Reto(retoText))
+                val nuevoReto = Reto(descripcion = retoText)
+                addReto(nuevoReto)
                 dialog.dismiss()
             } else {
                 Toast.makeText(this, "El reto no puede estar vacío", Toast.LENGTH_SHORT).show()
@@ -81,9 +98,11 @@ class RetosActivity : AppCompatActivity() {
 
     // Añadir un reto a la lista y notificar al adaptador
     private fun addReto(reto: Reto) {
-        retos.add(0, reto) // Agrega el reto al inicio de la lista
-        retoAdapter.notifyItemInserted(0) // Notifica al adaptador que se insertó un elemento en la posición 0
-        binding.recyclerView.scrollToPosition(0) // Opcional: desplaza la vista al inicio
+        val currentList = retoAdapter.getRetos().toMutableList()
+        currentList.add(0, reto)  // Agrega el reto al inicio
+        retoAdapter.setRetos(currentList)  // Actualiza el adaptador
+        retoAdapter.notifyItemInserted(0)  // Notifica que se insertó un item en la posición 0
+        binding.recyclerView.scrollToPosition(0)
     }
 
     // Mostrar diálogo para editar un reto existente
@@ -119,11 +138,7 @@ class RetosActivity : AppCompatActivity() {
 
     // Actualizar un reto existente
     private fun updateReto(reto: Reto, updatedText: String) {
-        val index = retos.indexOf(reto)
-        if (index != -1) {
-            retos[index] = Reto(updatedText)
-            retoAdapter.notifyItemChanged(index)
-        }
+        retosViewModel.updateReto(reto.copy(descripcion = updatedText))
     }
 
 
@@ -152,10 +167,25 @@ class RetosActivity : AppCompatActivity() {
 
     // Eliminar un reto de la lista y notificar al adaptador
     private fun deleteReto(reto: Reto) {
-        val index = retos.indexOf(reto)
-        if (index != -1) {
-            retos.removeAt(index)
-            retoAdapter.notifyItemRemoved(index)
+        // Eliminar el reto del ViewModel
+        retosViewModel.deleteReto(reto)
+
+        // Crear una nueva lista mutable con los elementos restantes
+        val currentList = retoAdapter.getRetos().toMutableList()
+
+        // Eliminar el reto de la lista actual
+        currentList.remove(reto)
+
+        // Actualizar la lista del adaptador
+        retoAdapter.setRetos(currentList)
+
+        // Notificar al adaptador que un item ha sido eliminado
+        val position = currentList.indexOf(reto)
+        if (position != -1) {
+            retoAdapter.notifyItemRemoved(position)
         }
+
+        // Opcional: Si deseas desplazar la lista al principio o al final
+        binding.recyclerView.scrollToPosition(0)
     }
 }

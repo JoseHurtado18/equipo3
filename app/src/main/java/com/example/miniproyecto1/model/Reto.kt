@@ -1,5 +1,8 @@
 package com.example.miniproyecto1.model
 
 data class Reto(
-    val descripcion: String,
-)
+    val id: String? = null,
+    var descripcion: String,
+){
+    constructor() : this("", "" )
+}

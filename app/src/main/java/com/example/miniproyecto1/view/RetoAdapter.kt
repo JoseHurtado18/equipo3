@@ -6,12 +6,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miniproyecto1.R
+import com.example.miniproyecto1.model.Reto
+
 
 class RetoAdapter(
-    private val retos: List<Reto>,
+    private var retos: List<Reto>,
     private val onEditClick: (Reto) -> Unit,
     private val onDeleteClick: (Reto) -> Unit
 ) : RecyclerView.Adapter<RetoAdapter.RetoViewHolder>() {
+
+    fun setRetos(nuevosRetos: List<Reto>) {
+        retos = nuevosRetos
+        notifyDataSetChanged()
+    }
+
+    fun getRetos(): List<Reto> = retos
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RetoViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_reto, parent, false)
