@@ -24,13 +24,18 @@ class RetosViewModel : ViewModel() {
 
     fun deleteReto(reto: Reto){
         retosRepository.deleteReto(reto, onSuccess = {
-            retos.value = retos.value?.filterNot { it.id == reto.id }
-        }, onFailure = {})}
-
-    fun updateReto(reto: Reto){
-        retosRepository.updateReto(reto, onSuccess = {
             retos.value = retos.value?.toMutableList()?.apply {
-                val index = indexOfFirst { it.id == reto.id }
+                remove(reto)
+            }
+        }, onFailure = {
+            Log.e("DeleteReto", "Error al eliminar el reto: ${reto.descripcion}")
+        })
+    }
+
+    fun updateReto(reto: Reto, descripcion: String){
+        retosRepository.updateReto(reto, descripcion, onSuccess = {
+            retos.value = retos.value?.toMutableList()?.apply {
+                val index = indexOfFirst { it == reto }
                 if (index != -1) {
                     this[index] = reto
                 } else {
@@ -40,9 +45,9 @@ class RetosViewModel : ViewModel() {
             }
         }, onFailure = {
                 error ->
-            // Manejar el error, por ejemplo, mostrar un mensaje al usuario
+
             Log.e("RetosViewModel", "Error al actualizar el reto", error)
-            // Puedes emitir un evento para notificar a la vista sobre el error
+
         })
     }
 

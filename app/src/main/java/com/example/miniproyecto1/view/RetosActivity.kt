@@ -85,7 +85,7 @@ class RetosActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             val retoText = retoInput.text.toString()
             if (retoText.isNotBlank()) {
-                val nuevoReto = Reto(descripcion = retoText)
+                val nuevoReto = Reto(descripcion = retoText, id = "")
                 addReto(nuevoReto)
                 dialog.dismiss()
             } else {
@@ -98,6 +98,7 @@ class RetosActivity : AppCompatActivity() {
 
     // Añadir un reto a la lista y notificar al adaptador
     private fun addReto(reto: Reto) {
+        retosViewModel.addReto(reto)
         val currentList = retoAdapter.getRetos().toMutableList()
         currentList.add(0, reto)  // Agrega el reto al inicio
         retoAdapter.setRetos(currentList)  // Actualiza el adaptador
@@ -138,7 +139,7 @@ class RetosActivity : AppCompatActivity() {
 
     // Actualizar un reto existente
     private fun updateReto(reto: Reto, updatedText: String) {
-        retosViewModel.updateReto(reto.copy(descripcion = updatedText))
+        retosViewModel.updateReto(reto, updatedText)
     }
 
 
@@ -167,25 +168,16 @@ class RetosActivity : AppCompatActivity() {
 
     // Eliminar un reto de la lista y notificar al adaptador
     private fun deleteReto(reto: Reto) {
-        // Eliminar el reto del ViewModel
         retosViewModel.deleteReto(reto)
 
-        // Crear una nueva lista mutable con los elementos restantes
         val currentList = retoAdapter.getRetos().toMutableList()
-
-        // Eliminar el reto de la lista actual
         currentList.remove(reto)
-
-        // Actualizar la lista del adaptador
         retoAdapter.setRetos(currentList)
-
-        // Notificar al adaptador que un item ha sido eliminado
         val position = currentList.indexOf(reto)
         if (position != -1) {
             retoAdapter.notifyItemRemoved(position)
         }
 
-        // Opcional: Si deseas desplazar la lista al principio o al final
         binding.recyclerView.scrollToPosition(0)
     }
 }
