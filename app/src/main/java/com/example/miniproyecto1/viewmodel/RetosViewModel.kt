@@ -33,15 +33,16 @@ class RetosViewModel : ViewModel() {
     }
 
     fun updateReto(reto: Reto, descripcion: String){
+        val updatedReto = reto.copy(descripcion = descripcion)
         retosRepository.updateReto(reto, descripcion, onSuccess = {
             retos.value = retos.value?.toMutableList()?.apply {
-                val index = indexOfFirst { it == reto }
+
+                val index = indexOfFirst { it.id == updatedReto.id }
                 if (index != -1) {
-                    this[index] = reto
-                } else {
-                    // Si el reto no se encuentra en la lista, puedes agregar un nuevo elemento
-                    add(reto)
+                    this[index] = updatedReto
+
                 }
+
             }
         }, onFailure = {
                 error ->

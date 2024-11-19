@@ -140,6 +140,11 @@ class RetosActivity : AppCompatActivity() {
     // Actualizar un reto existente
     private fun updateReto(reto: Reto, updatedText: String) {
         retosViewModel.updateReto(reto, updatedText)
+
+        val currentList = retoAdapter.getRetos().toMutableList()
+        val position = currentList.indexOf(reto)
+        //currentList[position] = Reto(reto.id, updatedText)
+        retoAdapter.notifyItemChanged(position)
     }
 
 
