@@ -1,0 +1,59 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="100dp"
+        android:padding="20dp">
+
+
+        <ImageView
+            android:layout_marginTop="50dp"
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:background="@drawable/forma_random_reto"
+            />
+
+        <TextView
+            android:id="@+id/dialog_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Realiza un RecyclerView que liste una API de Pokemones"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="110dp"/>
+
+        <ImageView
+            android:id="@+id/imgReto"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center|top"
+            android:src="@drawable/circulo_random_reto"
+            app:layout_anchor="@+id/imageView"
+            app:layout_anchorGravity="top|center"
+            />
+
+        <Button
+            android:id="@+id/cerrarButton"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/forma_btn_cerrar"
+            android:text="Cancelar"
+            android:textColor="#FFFFFF"
+            app:layout_anchor="@+id/imageView"
+            app:layout_anchorGravity="bottom|center"
+            app:backgroundTint="@color/orange" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

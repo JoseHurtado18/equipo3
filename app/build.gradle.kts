@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id ("kotlin-kapt")
     id("com.google.gms.google-services")
+    id ("com.google.dagger.hilt.android")
 }
 
 android {
@@ -128,4 +129,8 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("androidx.activity:activity-ktx:1.8.0")
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
+
+    //dagger hilt
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
 }
