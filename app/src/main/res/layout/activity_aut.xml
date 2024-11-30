@@ -131,11 +131,6 @@
             android:onClick="@{() -> viewModel.register()}"/>
 
         <!-- Wave Design (You'll need to create a custom view for this) -->
-        <com.example.miniproyecto1.view.WaveView
-            android:layout_width="420dp"
-            android:layout_height="141dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
