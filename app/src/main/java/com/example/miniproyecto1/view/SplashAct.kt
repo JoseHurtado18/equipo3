@@ -20,7 +20,7 @@ class SplashAct : AppCompatActivity() {
         // Muestra la pantalla splash por 5 segundos
         Handler().postDelayed({
             // Inicia la actividad principal
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, AuthActivity::class.java)
             startActivity(intent)
             finish() // Cierra la actividad splash
         }, 5000) // 5000 milisegundos = 5 segundos

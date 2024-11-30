@@ -39,12 +39,14 @@ android {
     }
 
     buildFeatures {
-        dataBinding = true
+        dataBinding= true
+        viewBinding = true
     }
 }
 
 dependencies {
 
+    implementation("androidx.lifecycle:lifecycle-viewmodel-android:2.8.7")
     val navVersion = "2.3.5"
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
@@ -119,7 +121,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // LiveData
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
     //authentication
     implementation("com.google.firebase:firebase-auth-ktx")
@@ -128,4 +130,12 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("androidx.activity:activity-ktx:1.8.0")
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
+
+    //Dagger hilt
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+
+    implementation("androidx.activity:activity-ktx:1.8.0")
+
+
+    implementation("androidx.core:core-ktx:1.9.0")
 }
