@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pico botella"
-        android:textColor="@android:color/holo_orange_light"
+        android:textColor="@color/orange"
         android:textSize="24sp"
         android:layout_below="@id/splash_icon"
         android:layout_centerHorizontal="true"/>
