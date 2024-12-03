@@ -4,5 +4,5 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class miniproyecto1App:Application() {
+class Miniproyecto1App:Application() {
 }

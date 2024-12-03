@@ -8,20 +8,27 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.example.miniproyecto1.R
 import com.example.miniproyecto1.databinding.HomeBinding
+import com.example.miniproyecto1.viewmodel.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
 
-
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     lateinit var binding: HomeBinding
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var mediaPlayerGiro: MediaPlayer
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +38,8 @@ class HomeActivity : AppCompatActivity() {
         flashingButton()
         controllerSound()
         giroBotella()
+        homeViewModel.getPokemons()
+        homeViewModel.getRetos()
 
 
     }
@@ -219,6 +228,7 @@ class HomeActivity : AppCompatActivity() {
                 override fun onFinish() {
 
                     tvCounter.text = "0"
+                    showDialogRetoRandom()
 
                     mediaPlayerGiro.stop()
                     mediaPlayerGiro.release()
@@ -241,4 +251,29 @@ class HomeActivity : AppCompatActivity() {
 
 
     }
+
+    fun showDialogRetoRandom(){
+        val dialogView = layoutInflater.inflate(R.layout.dialog_random_reto, null)
+        val reto = homeViewModel.randomReto()
+        val pokemon = homeViewModel.randomPokemon()
+        val tvReto = dialogView.findViewById<TextView>(R.id.dialog_text)
+        val imgReto = dialogView.findViewById<ImageView>(R.id.imgReto)
+        tvReto.text = reto?.descripcion
+        Glide.with(this)
+            .load(pokemon?.img) // URL o string del atributo img
+            .into(imgReto)
+
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        dialogView.findViewById<Button>(R.id.cerrarBtn).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+
 }

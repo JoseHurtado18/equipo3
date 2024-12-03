@@ -1,22 +1,29 @@
 package com.example.miniproyecto1.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.miniproyecto1.model.Reto
 import com.example.miniproyecto1.repository.RetosRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class RetosViewModel : ViewModel() {
+@HiltViewModel
+class RetosViewModel @Inject constructor(
+    private val retosRepository: RetosRepository,
+) : ViewModel() {
 
-    private val retosRepository = RetosRepository()
+
     //val  retos = MutableLiveData<List<Reto>>()
-    val retos = MutableLiveData<List<Reto>>().apply { value = emptyList() }
+    private val _retos = MutableLiveData<MutableList<Reto>>()
+    val retos: LiveData<MutableList<Reto>> = _retos
 
 
     fun addReto(reto: Reto){
         retosRepository.addReto(reto,
             onSuccess = {
-                retos.value = retos.value?.toMutableList()?.apply { add(reto) }
+                _retos.value = retos.value?.toMutableList()?.apply { add(reto) }
         },
             onFailure = {})
 
@@ -24,7 +31,7 @@ class RetosViewModel : ViewModel() {
 
     fun deleteReto(reto: Reto){
         retosRepository.deleteReto(reto, onSuccess = {
-            retos.value = retos.value?.toMutableList()?.apply {
+            _retos.value = retos.value?.toMutableList()?.apply {
                 remove(reto)
             }
         }, onFailure = {
@@ -35,7 +42,7 @@ class RetosViewModel : ViewModel() {
     fun updateReto(reto: Reto, descripcion: String){
         val updatedReto = reto.copy(descripcion = descripcion)
         retosRepository.updateReto(reto, descripcion, onSuccess = {
-            retos.value = retos.value?.toMutableList()?.apply {
+            _retos.value = retos.value?.toMutableList()?.apply {
 
                 val index = indexOfFirst { it.id == updatedReto.id }
                 if (index != -1) {
@@ -54,7 +61,7 @@ class RetosViewModel : ViewModel() {
 
     fun getRetos(){
         retosRepository.getRetos(onSuccess = {
-            retos.value = it
+            _retos.value = it
         }, onFailure = {})
     }
 }

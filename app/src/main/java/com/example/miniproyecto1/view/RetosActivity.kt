@@ -15,7 +15,9 @@ import com.example.miniproyecto1.model.Reto
 import com.example.miniproyecto1.viewmodel.RetosViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RetosActivity : AppCompatActivity() {
 
     private lateinit var binding: RetosBinding

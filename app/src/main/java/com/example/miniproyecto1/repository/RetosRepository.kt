@@ -4,10 +4,13 @@ import android.util.Log
 import com.example.miniproyecto1.model.Reto
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.UUID
+import javax.inject.Inject
 
-class RetosRepository {
+class RetosRepository @Inject constructor(
+    private val firestore: FirebaseFirestore
+) {
 
-    private val firestore = FirebaseFirestore.getInstance()
+
     private val retosCollection = firestore.collection("retos")
 
     // Agregar un reto a la colección
@@ -55,12 +58,12 @@ class RetosRepository {
     }
 
     // Obtener todos los retos de la colección
-    fun getRetos(onSuccess: (List<Reto>) -> Unit, onFailure: (Exception) -> Unit) {
+    fun getRetos(onSuccess: (MutableList<Reto>) -> Unit, onFailure: (Exception) -> Unit) {
         retosCollection.get()
             .addOnSuccessListener { querySnapshot ->
                 val retosList = querySnapshot.documents.mapNotNull { document ->
                     document.toObject(Reto::class.java)  // Convierte cada documento a un objeto Reto
-                }
+                }.toMutableList()
                 onSuccess(retosList)  // Llamada cuando los retos se han obtenido exitosamente
             }
             .addOnFailureListener { exception ->
