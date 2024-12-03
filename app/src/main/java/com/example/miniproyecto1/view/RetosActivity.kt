@@ -29,6 +29,8 @@ class RetosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.retos)
 
+        viewModelObservers()
+
 
 
         // Inicialización del adaptador con la lista de retos
@@ -43,26 +45,25 @@ class RetosActivity : AppCompatActivity() {
             adapter = retoAdapter
         }
 
-        // Observa los cambios en la lista de retos desde el ViewModel
-        retosViewModel.retos.observe(this) { nuevosRetos ->
-            if (nuevosRetos != null) {
-                retoAdapter.setRetos(nuevosRetos) // Actualizar la lista en el adaptador
-            }
-
-            retoAdapter.notifyDataSetChanged() // Notificar cambios al adaptador
-        }
-
-        // Llamar a getRetos para cargar los datos iniciales
         retosViewModel.getRetos()
 
-        // Configuración del botón flotante para añadir nuevos retos
         binding.fab.setOnClickListener {
             showAddRetoDialog()
         }
 
-        // Configuración del botón de volver
         binding.backButton.setOnClickListener {
-            finish() // Cierra la actividad actual y vuelve a la anterior
+            finish()
+        }
+    }
+
+    private fun viewModelObservers(){
+        observerRetos()
+    }
+
+    private fun observerRetos(){
+        retosViewModel.retos.observe(this){ retos ->
+            retoAdapter.setRetos(retos)
+            retoAdapter.notifyDataSetChanged()
         }
     }
 
@@ -143,9 +144,10 @@ class RetosActivity : AppCompatActivity() {
     private fun updateReto(reto: Reto, updatedText: String) {
         retosViewModel.updateReto(reto, updatedText)
 
-        val currentList = retoAdapter.getRetos().toMutableList()
-        val position = currentList.indexOf(reto)
-        //currentList[position] = Reto(reto.id, updatedText)
+        //val currentList = retoAdapter.getRetos().toMutableList()
+        val position = retoAdapter.getRetos().indexOf(reto)
+        val reto = retoAdapter.getRetos()[position]
+        reto.descripcion = updatedText
         retoAdapter.notifyItemChanged(position)
     }
 
