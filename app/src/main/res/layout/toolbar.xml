@@ -89,6 +89,19 @@
                     android:src="@drawable/share_24px"
                     />
 
+                <ImageView
+                    android:id="@+id/btnLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="15dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:padding="2dp"
+                    app:tint="@color/orange"
+                    android:src="@drawable/logout_24px"
+                    />
+
 
             </androidx.appcompat.widget.Toolbar>
 

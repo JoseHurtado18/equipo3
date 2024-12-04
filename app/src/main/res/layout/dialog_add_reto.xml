@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:backgroundTint="#FF5722"
+            android:backgroundTint="@color/orange"
             android:text="Cancelar"
             android:textColor="#FFFFFF" />
 
@@ -47,7 +47,8 @@
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#4CAF50"
+            android:backgroundTint="@color/verde"
+            android:enabled="true"
             android:text="Guardar"
             android:textColor="#FFFF" />
     </LinearLayout>

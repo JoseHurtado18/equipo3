@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.miniproyecto1.R
@@ -30,6 +31,22 @@ class RetosActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.retos)
 
         viewModelObservers()
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_add_reto, null)
+        val saveButton = dialogView.findViewById<Button>(R.id.saveButton)
+
+        retosViewModel.isGuardarButtonEnabled.observe(this) { isEnabled ->
+            saveButton.isEnabled = isEnabled
+            saveButton.apply {
+                val backgroundColor = if (isEnabled) {
+                    ContextCompat.getColor(context, R.color.verde)
+                }else{
+                    ContextCompat.getColor(context, R.color.gray)
+                }
+                saveButton.setBackgroundColor(backgroundColor)
+            }
+
+        }
 
 
 

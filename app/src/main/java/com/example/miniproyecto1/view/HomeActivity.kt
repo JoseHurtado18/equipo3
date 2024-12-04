@@ -19,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.example.miniproyecto1.R
 import com.example.miniproyecto1.databinding.HomeBinding
+import com.example.miniproyecto1.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
 
@@ -27,6 +28,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var binding: HomeBinding
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var mediaPlayerGiro: MediaPlayer
+    private val homeViewModel: HomeViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
         giroBotella()
         //homeViewModel.getPokemons()
         //homeViewModel.getRetos()
+
 
 
     }
@@ -75,6 +78,7 @@ class HomeActivity : AppCompatActivity() {
         val btnShare: ImageView = binding.contentToolbar.btnShare
         val btnReglas: ImageView = binding.contentToolbar.btnReglas
         val btnRetos: ImageView = binding.contentToolbar.btnRetos
+        val btnLogout: ImageView = binding.contentToolbar.btnLogout
 
 
         setTouchAnimation(btnShare)

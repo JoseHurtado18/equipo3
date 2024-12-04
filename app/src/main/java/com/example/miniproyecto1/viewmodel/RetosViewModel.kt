@@ -2,6 +2,7 @@ package com.example.miniproyecto1.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.miniproyecto1.model.Reto
@@ -18,6 +19,20 @@ class RetosViewModel @Inject constructor(
     //val  retos = MutableLiveData<List<Reto>>()
     private val _retos = MutableLiveData<MutableList<Reto>>()
     val retos: LiveData<MutableList<Reto>> = _retos
+
+    val retoString = MutableLiveData<String>().apply {
+        value = ""
+    }
+
+    var isGuardarButtonEnabled = MediatorLiveData<Boolean>().apply {
+        fun updateEnabled() {
+            if (retoString.value.isNullOrEmpty()) {
+                val isButtonEnabled = true
+            }
+        }
+        addSource(retoString) { updateEnabled() }
+
+    }
 
 
     fun addReto(reto: Reto){
