@@ -1,6 +1,7 @@
 package com.example.miniproyecto1.di
 
 import com.example.miniproyecto1.utils.Constans
+import com.example.miniproyecto1.webservice.ApiService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -36,5 +37,11 @@ object Module {
             .build()
     }
 
+    @Singleton
+    @Provides
+    fun provideApiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
+
+    }
 
 }

@@ -1,59 +1,73 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/transparent">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginTop="100dp"
-        android:padding="20dp">
+        android:padding="10dp"
+        android:layout_marginTop="100dp">
 
+        <!-- Fondo principal -->
 
+        <!-- Imagen del reto -->
         <ImageView
-            android:layout_marginTop="50dp"
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="150dp"
-            android:gravity="center"
+            android:layout_marginTop="50dp"
             android:background="@drawable/forma_random_reto"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/dialog_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Realiza un RecyclerView que liste una API de Pokemones"
-            android:fontFamily="@font/roboto"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:gravity="center"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="110dp"/>
+        <!-- Texto del reto -->
+
+        <!-- Botón Cerrar -->
 
         <ImageView
             android:id="@+id/imgReto"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginTop="0dp"
-            android:gravity="center|top"
             android:src="@drawable/circulo_random_reto"
-            app:layout_anchor="@+id/imageView"
-            app:layout_anchorGravity="top|center"
-            />
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="@id/imageView"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="@id/imageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/dialog_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="Realiza un RecyclerView que liste una API de Pokemones"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgReto"
+            app:layout_constraintVertical_bias="0.388" />
 
         <Button
             android:id="@+id/cerrarBtn"
             android:layout_width="110dp"
             android:layout_height="40dp"
-            android:layout_gravity="center|bottom"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/forma_btn_cerrar"
             android:text="Cerrar"
             android:textColor="#FFFFFF"
-            app:layout_anchor="@+id/imageView"
-            app:layout_anchorGravity="bottom|center"
-            app:backgroundTint="@color/orange" />
+            app:backgroundTint="@color/orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialog_text" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

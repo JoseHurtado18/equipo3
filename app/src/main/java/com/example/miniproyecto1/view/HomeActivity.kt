@@ -265,6 +265,29 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
+    fun showDialogRetoRandom(){
+        val dialogView = layoutInflater.inflate(R.layout.dialog_random_reto, null)
+        val reto = homeViewModel.randomReto()
+        val pokemon = homeViewModel.randomPokemon()
+        val tvReto = dialogView.findViewById<TextView>(R.id.dialog_text)
+        val imgReto = dialogView.findViewById<ImageView>(R.id.imgReto)
+        tvReto.text = reto?.descripcion
+        Glide.with(this)
+            .load(pokemon?.img)
+            .into(imgReto)
+
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        dialogView.findViewById<Button>(R.id.cerrarBtn).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
 
 
 }
