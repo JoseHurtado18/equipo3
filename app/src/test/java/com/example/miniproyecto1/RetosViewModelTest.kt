@@ -33,6 +33,7 @@ class RetosViewModelTest {
         MockitoAnnotations.openMocks(this)
         retosRepository = mock(RetosRepository::class.java)
         retosViewModel = RetosViewModel(retosRepository)
+        Dispatchers.setMain(UnconfinedTestDispatcher())
 
     }
 
@@ -45,7 +46,8 @@ class RetosViewModelTest {
         retosViewModel.retos.observeForever(observer)
 
         val onFailure: (Throwable) -> Unit
-        `when`(retosRepository.addReto(mockReto, any(), any())).thenAnswer {
+        @Suppress("UNCHECKED_CAST")
+        `when`(retosRepository.addReto(mockReto, any(), onFailure = {})).thenAnswer {
             val onSuccess = it.arguments[0] as () -> Unit
             onSuccess()
         }
@@ -65,7 +67,7 @@ class RetosViewModelTest {
     @Test
     fun `test método para getRetos`() {
         //given
-        Dispatchers.setMain(UnconfinedTestDispatcher())
+
         val mockRetos = mutableListOf(
             Reto(descripcion = "Reto 1", id = "1")
         )
@@ -82,7 +84,7 @@ class RetosViewModelTest {
         val observer = Observer<List<Reto>> { observedValue.add(it) }
         retosViewModel.retos.observeForever(observer)
 
-        // Llamar a la función que queremos probar
+
         //when
         retosViewModel.getRetos()
 
