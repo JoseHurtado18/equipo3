@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#FDFBFB" />
+
+    <path
+        android:pathData="M0,0 C100,100 200,0 300,100 C400,0 500,100 600,0 H600V100 H0 Z"
+        android:fillColor="@android:color/black" />
+
+</shape>

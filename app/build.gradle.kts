@@ -136,4 +136,49 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.47")
 
     implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    implementation("androidx.activity:activity-ktx:1.8.0")
+
+
+    implementation("androidx.core:core-ktx:1.9.0")
+
+
+
+    testImplementation("androidx.test:core-ktx:1.5.0")
+
+    testImplementation ("androidx.arch.core:core-testing:2.2.0") // Para probar ViewModels con LiveData
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+
+    // Otras dependencias...
+    testImplementation ("junit:junit:4.13.2" )
+    testImplementation ("org.mockito.kotlin:mockito-kotlin:4.0.0" )
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2" )
+    // Dependencias para pruebas de instrumentación
+    androidTestImplementation ("androidx.test.ext:junit:1.1.3" )  // Asegúrate de que esta línea esté presente
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0" )  // Para pruebas de UI
+    testImplementation ("org.mockito:mockito-core:3.11.2" )
+    testImplementation ("org.mockito:mockito-inline:3.11.2" )
+    testImplementation ("io.mockk:mockk:1.12.0" )
+
+    // JUnit
+    testImplementation ("junit:junit:4.13.2" )
+    // Mockito
+    testImplementation ("org.mockito:mockito-core:4.0.0" )
+    testImplementation ("org.mockito:mockito-inline:4.0.0" )  // Para usar con Kotli
+    // Coroutines Test
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0" )
+    // Pruebas de Android
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.44")
+
+    // Mockito
+    testImplementation("org.mockito:mockito-core:4.0.0")
+    testImplementation("org.mockito:mockito-inline:4.0.0")
+    androidTestImplementation("org.mockito:mockito-android:4.0.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    testImplementation("org.robolectric:robolectric:4.9")
 }
