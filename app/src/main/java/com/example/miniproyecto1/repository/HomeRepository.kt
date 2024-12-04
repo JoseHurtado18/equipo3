@@ -4,6 +4,8 @@ import com.example.miniproyecto1.model.Pokemon
 import com.example.miniproyecto1.model.Reto
 import com.example.miniproyecto1.webservice.ApiService
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(
@@ -13,8 +15,16 @@ class HomeRepository @Inject constructor(
 
     private val retosCollection = firestore.collection("retos")
 
-    suspend fun getPokemons() : List<Pokemon>{
-        return  apiService.getPokemons()
+    suspend fun getPokemons(): List<Pokemon> {
+        return withContext(Dispatchers.IO){
+            try {
+                apiService.getPokemons()
+            }catch (e: Exception){
+                e.printStackTrace()
+                listOf()
+            }
+        }
+
     }
 
     fun getRetos(onSuccess: (MutableList<Reto>) -> Unit, onFailure: (Exception) -> Unit) {

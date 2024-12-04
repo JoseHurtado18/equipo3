@@ -10,6 +10,7 @@ import com.example.miniproyecto1.repository.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -23,14 +24,19 @@ class HomeViewModel @Inject constructor(
     val retos: LiveData<MutableList<Reto>> = _retos
 
     fun randomPokemon(): Pokemon? {
-        val pokemonsList = pokemons.value
-        var index = (0 until (pokemonsList?.size ?: 0)).random()
-        val pokemon = pokemons.value?.get(index)
-        return pokemon
+        val pokemonsList = pokemons.value as? List<Pokemon>
+        if (pokemonsList.isNullOrEmpty()) {
+            return null
+        }
+        val index = (0 until (pokemonsList.size ?: 0)).random()
+        return pokemonsList[index]
     }
 
     fun randomReto(): Reto? {
         val retosList = retos.value
+        if (retosList.isNullOrEmpty()) {
+            return null
+        }
         var index = (0 until (retosList?.size ?: 0)).random()
         val reto = retos.value?.get(index)
         return reto
