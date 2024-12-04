@@ -26,7 +26,7 @@ class SplashAct : AppCompatActivity() {
         miImageView.startAnimation(animacion)
 
         splashViewModel.startTimer {
-            val intent = Intent(this, AuthActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
             finish()
         }

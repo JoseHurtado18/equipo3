@@ -15,7 +15,7 @@ class WaveView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private var waveColor = ContextCompat.getColor(context, R.color.white)
+    private var waveColor = ContextCompat.getColor(context, R.color.black)
     private var waveAmplitude = 100f
     private var waveWidth = 100f
 
@@ -39,11 +39,13 @@ class WaveView @JvmOverloads constructor(
 
         path.reset()
         path.moveTo(0f, height.toFloat())
+        val waveWidth = width.toFloat() / 4f // Ancho de cada onda
 
-        for (i in 0..2) {
+        for (i in 0..3) {
             val startX = i * waveWidth
             val endX = startX + waveWidth
             val controlX = (startX + endX) / 2f
+
             val controlY = if (i % 2 == 0) waveAmplitude else -waveAmplitude
 
             path.quadTo(controlX, height - controlY, endX.toFloat(), height.toFloat())

@@ -11,9 +11,9 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor() : ViewModel() {
 
     fun startTimer(onTimerFinished: () -> Unit) {
-        viewModelScope.launch {
+        viewModelScope.launch { // Inicia una corrutina en el ámbito del ViewModel
             delay(5000) // 5 segundos de retraso
-            onTimerFinished()
+            onTimerFinished() // Llama a la función onTimerFinished cuando el temporizador finalice
         }
     }
 }
