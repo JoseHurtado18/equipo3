@@ -3,8 +3,6 @@ package com.example.miniproyecto1.di
 
 
 import com.google.firebase.auth.FirebaseAuth
-import com.example.miniproyecto1.repository.AuthRepository
-import com.example.miniproyecto1.repository.AuthRepositoryImpl
 import com.example.miniproyecto1.repository.AuthRemoteDataSource
 import dagger.Module
 import dagger.Provides
@@ -14,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object appModule {
+object Module {
 
     @Provides
     @Singleton
@@ -28,9 +26,9 @@ object appModule {
         return AuthRemoteDataSource(firebaseAuth)
     }
 
-    @Provides
+    /*@Provides
     @Singleton
     fun provideAuthRepository(authRemoteDataSource: AuthRemoteDataSource): AuthRepository {
         return AuthRepositoryImpl(authRemoteDataSource)
-    }
+    }*/
 }

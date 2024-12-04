@@ -2,6 +2,9 @@ package com.example.miniproyecto1.view
 
 
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,34 +15,40 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.example.miniproyecto1.R
-import com.example.miniproyecto1.viewmodel.AuthViewModel
+import com.example.miniproyecto1.model.UserRequest
+import com.example.miniproyecto1.viewmodel.LoginViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AuthActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
-    private val viewModel: AuthViewModel by viewModels()
-
+    private val loginViewModel: LoginViewModel by viewModels()
+    private lateinit var sharedPreferences: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedPreferences = getSharedPreferences("shared", Context.MODE_PRIVATE)
+        viewModelObservers()
+
+
         try{
             setContentView(R.layout.activity_aut)
 
             // Email Input
             val emailEditText = findViewById<TextInputEditText>(R.id.email_edit_text)
             emailEditText.addTextChangedListener { editable ->
-                viewModel.email.value = editable.toString()
+                loginViewModel.email.value = editable.toString()
             }
 
             // Password Input
             val passwordEditText = findViewById<TextInputEditText>(R.id.password_edit_text)
             passwordEditText.addTextChangedListener { editable ->
-                viewModel.password.value = editable.toString()
+                loginViewModel.password.value = editable.toString()
             }
             val passwordTextInputLayout = findViewById<TextInputLayout>(R.id.password_input_layout)
 
@@ -48,14 +57,14 @@ class AuthActivity : AppCompatActivity() {
 
             // Login Button
             val loginButton = findViewById<MaterialButton>(R.id.login_button)
-            loginButton.setOnClickListener { viewModel.login() }
+            loginButton.setOnClickListener { loginUser() }
 
             // Register Text Button
             val registerTextButton = findViewById<TextView>(R.id.register_text_button)
-            registerTextButton.setOnClickListener { viewModel.register() }
+            registerTextButton.setOnClickListener { registerUser() }
 
             // Observa los cambios en el ViewModel
-            viewModel.isPasswordValid.observe(this) { isValid ->
+            loginViewModel.isPasswordValid.observe(this) { isValid ->
                 passwordTextInputLayout.boxStrokeColor = if (isValid)
                     ContextCompat.getColor(this, R.color.white)
                 else
@@ -63,15 +72,15 @@ class AuthActivity : AppCompatActivity() {
                 passwordErrorMessage.visibility = if (isValid) View.GONE else View.VISIBLE
             }
 
-            viewModel.isLoginButtonEnabled.observe(this) { isEnabled ->
+            loginViewModel.isLoginButtonEnabled.observe(this) { isEnabled ->
                 loginButton.isEnabled = isEnabled
             }
 
-            viewModel.isRegisterButtonEnabled.observe(this) { isEnabled ->
+            loginViewModel.isRegisterButtonEnabled.observe(this) { isEnabled ->
                 registerTextButton.isEnabled = isEnabled
             }
 
-            viewModel.loginEvent.observe(this) { success ->
+            loginViewModel.loginEvent.observe(this) { success ->
                 if (success) {
                     // Navega a la pantalla de inicio
                     // ...
@@ -81,7 +90,7 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
 
-            viewModel.registerEvent.observe(this) { success ->
+            loginViewModel.registerEvent.observe(this) { success ->
                 if (success) {
                     // Navega a la pantalla de inicio
                     // ...
@@ -92,10 +101,10 @@ class AuthActivity : AppCompatActivity() {
             }
 
 
-            viewModel.error.observe(this) { errorMessage ->
+            loginViewModel.error.observe(this) { errorMessage ->
                 if (errorMessage != null) {
                     Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
-                    viewModel._error.value = null // Limpia el mensaje de error después de mostrarlo
+                    loginViewModel._error.value = null // Limpia el mensaje de error después de mostrarlo
                 }
             }
         } catch (e: Exception) {
@@ -104,4 +113,52 @@ class AuthActivity : AppCompatActivity() {
             Toast.makeText(this, "Ocurrió un error al iniciar la actividad", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun viewModelObservers() {
+        observerIsRegister()
+    }
+    private fun observerIsRegister() {
+        loginViewModel.isRegister.observe(this) { userResponse ->
+            if (userResponse.isRegister) {
+                Toast.makeText(this, userResponse.message, Toast.LENGTH_SHORT).show()
+                sharedPreferences.edit().putString("email",userResponse.email).apply()
+                goToHome()
+            } else {
+                Toast.makeText(this, userResponse.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun goToHome(){
+        val intent = Intent (this, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun registerUser() {
+        val email = findViewById<TextInputEditText>(R.id.email_edit_text).text.toString().trim()
+        val pass = findViewById<TextInputEditText>(R.id.password_edit_text).text.toString().trim()
+        val userRequest = UserRequest(email, pass)
+
+        if (email.isNotEmpty() && pass.isNotEmpty()) {
+            loginViewModel.registerUser(userRequest)
+        } else {
+            Toast.makeText(this, "Campos Vacíos", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    private fun loginUser(){
+        val email = findViewById<TextInputEditText>(R.id.email_edit_text).text.toString().trim()
+        val pass = findViewById<TextInputEditText>(R.id.password_edit_text).text.toString().trim()
+        loginViewModel.loginUser(email,pass){ isLogin ->
+            if (isLogin){
+                sharedPreferences.edit().putString("email",email).apply()
+                goToHome()
+            }else {
+                Toast.makeText(this, "Login incorrecto", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 }

@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id ("kotlin-kapt")
     id("com.google.gms.google-services")
+    id ("com.google.dagger.hilt.android")
 }
 
 android {
@@ -39,14 +40,12 @@ android {
     }
 
     buildFeatures {
-        dataBinding= true
-        viewBinding = true
+        dataBinding = true
     }
 }
 
 dependencies {
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-android:2.8.7")
     val navVersion = "2.3.5"
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
@@ -121,7 +120,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
 
     //authentication
     implementation("com.google.firebase:firebase-auth-ktx")
@@ -131,11 +130,9 @@ dependencies {
     implementation ("androidx.activity:activity-ktx:1.8.0")
     implementation ("androidx.fragment:fragment-ktx:1.6.2")
 
-    //Dagger hilt
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    //dagger hilt
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
 
-    implementation("androidx.activity:activity-ktx:1.8.0")
-
-
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 }
