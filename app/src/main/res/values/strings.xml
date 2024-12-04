@@ -5,4 +5,9 @@
     <string name="descripcion_como_se_juega">Los jugadores forman un círculo y en el centro colocan el dispositivo móvil, luego tocan el botón parpadeante para girar la botella. El jugador que señale la botella debe cumplir el reto que lanza la app, de lo contrario abandona el juego.</string>
     <string name="quien_gana">¿Quién gana?</string>
     <string name="descripcion_quien_gana">Gana el último jugador que no abandone el juego.</string>
+    <string name="email">Email</string>
+    <string name="Password">Password</string>
+    <string name="minimo_6_digits">Mínimo 6 dígitos</string>
+    <string name="login">Login</string>
+    <string name="register">Registro</string>
 </resources>

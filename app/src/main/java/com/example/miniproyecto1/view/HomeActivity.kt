@@ -19,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.example.miniproyecto1.R
 import com.example.miniproyecto1.databinding.HomeBinding
+import com.example.miniproyecto1.utils.SessionManager
 import com.example.miniproyecto1.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.random.Random
@@ -28,12 +29,14 @@ class HomeActivity : AppCompatActivity() {
     lateinit var binding: HomeBinding
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var mediaPlayerGiro: MediaPlayer
+    private lateinit var sessionManager: SessionManager
     private val homeViewModel: HomeViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.home)
+        sessionManager = SessionManager(this)
 
         setupToolbar()
         flashingButton()
@@ -79,6 +82,12 @@ class HomeActivity : AppCompatActivity() {
         val btnReglas: ImageView = binding.contentToolbar.btnReglas
         val btnRetos: ImageView = binding.contentToolbar.btnRetos
         val btnLogout: ImageView = binding.contentToolbar.btnLogout
+
+        btnLogout.setOnClickListener {
+            sessionManager.clearSession()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
 
         setTouchAnimation(btnShare)
