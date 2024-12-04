@@ -1,5 +1,6 @@
 package com.example.miniproyecto1.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,10 +27,13 @@ class HomeViewModel @Inject constructor(
     fun randomPokemon(): Pokemon? {
         val pokemonsList = pokemons.value as? List<Pokemon>
         if (pokemonsList.isNullOrEmpty()) {
+            Log.d("randomPokemon", "La lista de pokemons está vacía o es nula.")
             return null
         }
         val index = (0 until (pokemonsList.size ?: 0)).random()
-        return pokemonsList[index]
+        val selectedPokemon = pokemonsList[index]
+        Log.d("randomPokemon", "Pokémon seleccionado: $selectedPokemon")
+        return selectedPokemon
     }
 
     fun randomReto(): Reto? {

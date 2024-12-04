@@ -260,7 +260,7 @@ class HomeActivity : AppCompatActivity() {
         val imgReto = dialogView.findViewById<ImageView>(R.id.imgReto)
         tvReto.text = reto?.descripcion
         Glide.with(this)
-            .load(pokemon?.img) // URL o string del atributo img
+            .load(pokemon?.img)
             .into(imgReto)
 
 

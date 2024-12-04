@@ -1,5 +1,6 @@
 package com.example.miniproyecto1.repository
 
+import android.util.Log
 import com.example.miniproyecto1.model.Pokemon
 import com.example.miniproyecto1.model.Reto
 import com.example.miniproyecto1.webservice.ApiService
@@ -16,16 +17,18 @@ class HomeRepository @Inject constructor(
     private val retosCollection = firestore.collection("retos")
 
     suspend fun getPokemons(): List<Pokemon> {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             try {
-                apiService.getPokemons()
-            }catch (e: Exception){
+                val response = apiService.getPokemons()
+                Log.d("getPokemons", "Pokemons recibidos: ${response.pokemon}")
+                response.pokemon
+            } catch (e: Exception) {
                 e.printStackTrace()
                 listOf()
             }
         }
-
     }
+
 
     fun getRetos(onSuccess: (MutableList<Reto>) -> Unit, onFailure: (Exception) -> Unit) {
         retosCollection.get()
